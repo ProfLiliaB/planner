@@ -1,47 +1,53 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Planner</title>
 </head>
+
 <body>
-    <?php include_once "conexao.php"; ?>
-    <h1>Lista de tarefas</h1>
-    <div>
-        <form action="processar.php" method="post">
-            <div>
-                <label for="nome">Nome da Tarefa: </label>
-                <input type="text" name="nome" id="nome">
-            </div>
-            <div>
-                <label for="descricao">Descricao: </label>
-                <br>
-                <textarea name="descricao" id="descricao" cols="30" rows="5"></textarea>
-            </div>
-            <div>
-                <label for="status">Status: 
-                    <input type="checkbox" name="status" id="status" value="1">
-                </label>
-            </div>
-            <div>
-                <button type="submit">Cadastrar</button>
-            </div>
-            <div>
-                <?php 
-                echo $_GET['msg']??"";
-                ?>
-            </div>
-        </form>
-    </div>
-    <hr>
-    <?php 
-    $select = $con->query("SELECT * FROM tarefas");
-    while($result = $select->fetch()){
-        $id = $result["id"];
-        $status = $result['status_tarefa']?"Tarefa Concluída":"Tarefa a fazer";
-        echo "<div>".$result['nome'].": ".$result['descricao']." - ".$status."<a href='editar.php?id=$id'>Editar</a></div>";
-    }
-    ?>
+    <header>
+        <nav>
+            <ul>
+                <li>Home</li>
+                <li>Novo</li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <?php
+        require_once "classes/Tarefa.php";
+        include_once "conexao.php";
+        ?>
+        <h1>Lista de tarefas</h1>
+
+        <table>
+            <tr>
+                <th>Tarefa</th>
+                <th>Descricao</th>
+                <th>Status</th>
+            </tr>
+            <?php
+            $select = Tarefa::read();
+            foreach($select as $result) {
+                echo "<tr>";
+                $id = $result["id"];
+                $status = $result['status_tarefa'] ? "Concluída" : "A fazer";
+                echo "<td>" . $result['nome']."</td>";
+                echo "<td>" .$result['descricao']."</td>";
+                echo "<td>" .$status . "<a href='formulario.php?id=$id'>Editar</a></td>";
+                echo "</tr>";
+            }
+            ?> 
+            <tr>
+                <td colspan="3">
+                    <?php echo $_GET['msg'] ?? ""; ?>
+                </td>
+            </tr>
+        </table>
+    </main>
 </body>
+
 </html>
