@@ -31,16 +31,16 @@
             </tr>
             <?php
             $select = Tarefa::read();
-            foreach($select as $result) {
+            foreach ($select as $result) {
                 echo "<tr>";
                 $id = $result["id"];
                 $status = $result['status_tarefa'] ? "Concluída" : "A fazer";
-                echo "<td>" . $result['nome']."</td>";
-                echo "<td>" .$result['descricao']."</td>";
-                echo "<td>" .$status . "<a href='formulario.php?id=$id'>Editar</a></td>";
+                    echo "<td>" . $result['nome'] . "</td>";
+                    echo "<td>" . $result['descricao'] . "</td>";
+                    echo "<td>" . $status . "<a href='formulario.php?id=$id'>Editar</a></td>";
                 echo "</tr>";
             }
-            ?> 
+            ?>
             <tr>
                 <td colspan="3">
                     <?php echo $_GET['msg'] ?? ""; ?>

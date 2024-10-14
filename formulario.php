@@ -11,7 +11,7 @@ if ($id > 0) {
 }
 ?>
 <form method="post" action="processa.php">
-    <input type="hidden" name="id" value="<?=$id?>">
+    <input type="hidden" name="id" value="<?= $id ?>">
     <div>
         <label for="nome">Nome da Tarefa: </label>
         <input type="text" name="nome" id="nome" value="<?= $dados['nome'] ?>">
